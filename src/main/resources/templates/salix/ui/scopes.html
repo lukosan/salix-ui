@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+	<title>Salix / Scopes</title>
+	
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:400,300,600" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/salix/ui.css}" />	
+	
+    <script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script> 
+	<script th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+	<script th:src="@{/salix/ui.js}"></script>
+	
+  </head>
+  <body class="container-fluid salix-ui">
+  
+    <header th:include="salix/ui/template :: header"></header>
+    
+	<section id="content">
+		
+		<h1 class="home">All scopes</h1>
+
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th>Scope</th>
+		      <th>Configurations</th>
+		      <th>URLs</th>
+		      <th>Templates</th>
+		      <th>Resources</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="scope : ${scopes}">
+		      <td th:text="${scope}"></td>
+		      <td><a th:href="@{${'/salix/ui/configuration/'+scope+'/'}}">Configurations</a></td>
+		      <td><a th:href="@{${'/salix/ui/url/'+scope+'/'}}">URLs</a></td>
+		      <td><a th:href="@{${'/salix/ui/template/'+scope+'/'}}">Templates</a></td>
+		      <td><a th:href="@{${'/salix/ui/resource/'+scope+'/'}}">Resources</a></td>
+		    </tr>
+		  </tbody>
+		</table>
+	</section>
+	
+  </body>
+</html>

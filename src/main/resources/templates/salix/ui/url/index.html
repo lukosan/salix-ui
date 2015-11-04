@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+	<title>Salix / URLs</title>
+	
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:400,300,600" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/salix/ui.css}" />	
+	
+    <script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script> 
+	<script th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+	<script th:src="@{/salix/ui.js}"></script>
+	
+  </head>
+  <body class="container-fluid salix-ui">
+  
+    <header th:include="salix/ui/template :: header"></header>
+    
+	<section id="content">
+		
+	  <div class="clearfix">
+		<h1 class="pull-left">URLs</h1>
+		
+		<div th:unless="${null==scope}" class="pull-right well">
+	      <form th:action="''" method="POST" class="form-inline">
+		    <input type="text" class="form-control" name="url" placeholder="Enter new URL..." />
+		    <input type="submit" class="btn btn-primary" value="Create" />
+		  </form>
+		</div>
+	  </div>
+
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th>Scope</th>
+		      <th>URL</th>
+		      <th>HTTP Status</th>
+		      <th>View</th>
+			  <th>Published</th>
+			  <th>Removed</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="url : ${urls}">
+		      <td th:text="${url.scope}">Scope</td>
+		      <td><a th:href="@{/salix/ui/url/{pathParam1}/{pathParam2}/(pathParam1=${url.scope},pathParam2=${#salix.urlEncode(url.url)})}" th:text="${url.url}">URL</a></td>
+		      <td th:text="${url.status}">Status</td>
+		      <td th:text="${url.view}">View</td>
+		      <td th:text="${url.published}">Published</td>
+		      <td th:text="${url.removed}">Removed</td>
+		    </tr>
+		  </tbody>
+		</table>
+		
+	</section>
+	
+  </body>
+</html>

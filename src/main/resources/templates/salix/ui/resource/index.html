@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+	<title>Salix / Resources</title>
+	
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:400,300,600" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/salix/ui.css}" />	
+	
+    <script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script> 
+	<script th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+	<script th:src="@{/salix/ui.js}"></script>
+	
+  </head>
+  <body class="container-fluid salix-ui">
+  
+    <header th:include="salix/ui/template :: header"></header>
+    
+	<section id="content">
+		
+      <div class="clearfix">
+		<h1 class="pull-left">Resources</h1>
+		
+		<div th:unless="${null==scope}" class="pull-right well">
+	      <form th:action="''" method="POST" class="form-inline">
+		    <input type="text" class="form-control" name="sourceId" placeholder="Enter new sourceId..." />
+		    <input type="submit" class="btn btn-primary" value="Create" />
+		  </form>
+		</div>
+	  </div>
+
+		<table class="table">
+		  <thead>
+		    <tr>
+		      <th>Scope</th>
+		      <th>Source</th>
+		      <th>URI</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="resource : ${resources}">
+		      <td th:text="${resource.scope}">Scope</td>
+		      <td><a th:href="@{${'/salix/ui/resource/'+resource.scope+'/'+resource.sourceId+'/'}}" th:text="${resource.sourceId}">Source id</a></td>
+		      <td th:text="${resource.sourceUri}">URI</td>
+		    </tr>
+		  </tbody>
+		</table>
+		
+	</section>
+	
+  </body>
+</html>

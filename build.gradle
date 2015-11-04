@@ -1,0 +1,21 @@
+dependencies {
+	compile project(':salix-core')
+	// Spring security annotations
+	compile "org.springframework.security:spring-security-core:$springSecurityVersion"
+	// Spring Thymeleaf
+	compile "org.springframework.boot:spring-boot-starter-thymeleaf:$springBootVersion"
+	// The Neko parser library is required to run Thymeleaf in LEGACYHTML5 mode
+	compile 'net.sourceforge.nekohtml:nekohtml:1.9.15'
+
+	compile 'org.webjars:jquery:2.1.4'
+	compile('org.webjars:bootstrap:3.3.5') {
+		exclude group: 'org.webjars', module:'jquery'
+	}
+
+}
+
+springBoot {
+	mainClass = 'org.lukosan.salix.Application'
+}
+
+bintray.pkg.version.desc = 'User Interface components for configuring salix and publishing content'

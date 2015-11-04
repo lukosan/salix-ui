@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+	<title>Salix / URLs / Edit</title>
+	
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:400,300,600" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/salix/ui.css}" />	
+	
+    <script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script> 
+	<script th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+	<script th:src="@{/salix/ui.js}"></script>
+	
+  </head>
+  <body class="container-fluid salix-ui">
+  
+    <header th:include="salix/ui/template :: header"></header>
+    
+	<section id="content">
+		
+		<h1>Url / <span th:text="${url.scope+url.url}">name</span></h1>
+
+		<form th:action="''" method="POST" role="form">
+		  <div class="row">
+		  <div class="form-group col-md-6">
+            <label for="status">HTTP Status:</label>
+            <input type="text" class="form-control" id="status" name="status" th:value="${url.status}" />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="view">View:</label>
+            <input type="text" class="form-control" id="view" name="view" th:value="${url.view}" />
+          </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <label for="published">Published:</label>
+              <input type="text" class="form-control" id="published" name="published" th:value="${url.published}" />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="removed">Removed:</label>
+              <input type="text" class="form-control" id="removed" name="removed" th:value="${url.removed}" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-2">
+		      <input type="submit" value="Save" class="btn btn-primary" />
+		    </div>
+		  </div>
+		</form>
+		
+	</section>
+	
+  </body>
+</html>
