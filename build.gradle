@@ -1,5 +1,5 @@
 dependencies {
-	compile project(':salix-core')
+	compile project(':salix-mvc')
 	// Spring security annotations
 	compile "org.springframework.security:spring-security-core:$springSecurityVersion"
 	// Spring Thymeleaf

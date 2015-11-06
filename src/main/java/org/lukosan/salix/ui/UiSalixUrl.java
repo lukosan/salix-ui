@@ -13,7 +13,7 @@ public class UiSalixUrl implements SalixUrl {
 	
 	private String scope;
 	private String url;
-	private HttpStatus status;
+	private int status;
 	private String view;
 	private LocalDateTime published;
 	private LocalDateTime removed;
@@ -21,7 +21,7 @@ public class UiSalixUrl implements SalixUrl {
 	
 	public UiSalixUrl() {
 		super();
-		setStatus(HttpStatus.OK);
+		setStatus(HttpStatus.OK.value());
 	}
 	public UiSalixUrl(String url) {
 		this();
@@ -40,10 +40,10 @@ public class UiSalixUrl implements SalixUrl {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public HttpStatus getStatus() {
+	public int getStatus() {
 		return status;
 	}
-	public void setStatus(HttpStatus status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 	public String getView() {
