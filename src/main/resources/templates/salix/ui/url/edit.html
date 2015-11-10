@@ -46,6 +46,10 @@
               <input type="text" class="form-control" id="removed" name="removed" th:value="${url.removed}" />
             </div>
           </div>
+          <div class="form-group">
+		    <label for="map">Model:</label>
+		    <textarea id="map" name="map" class="form-control json" th:text="${#salix.json(url.map)}"></textarea>
+		  </div>          
           <div class="row">
             <div class="form-group col-md-2">
 		      <input type="submit" value="Save" class="btn btn-primary" />

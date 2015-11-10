@@ -5,6 +5,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
 
+import org.lukosan.salix.MapUtils;
 import org.lukosan.salix.SalixUrl;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -53,11 +54,11 @@ public class UrlController extends ScopedController {
 	@PreAuthorize("hasPermission(#scope, 'SALIX_USER')")
 	@RequestMapping(value="/{scope}/{urlEncodedUrl}/", method=RequestMethod.POST)
 	public String edit(@PathVariable String scope, @PathVariable String urlEncodedUrl, @RequestParam int status, @RequestParam String view,
-			@RequestParam(required=false) String published, @RequestParam(required=false) String removed) throws UnsupportedEncodingException {
+			@RequestParam(required=false) String published, @RequestParam(required=false) String removed, @RequestParam String map) throws UnsupportedEncodingException {
 		String url = URLDecoder.decode(urlEncodedUrl, "utf8");
 		LocalDateTime pubd = parseLocalDateTime(published);
 		LocalDateTime remd = parseLocalDateTime(removed);
-		salixService.save(scope, url, status, view, pubd, remd, null);
+		salixService.save(scope, url, status, view, pubd, remd, MapUtils.fromString(map));
 		return "redirect:/salix/ui/url/" + scope + "/";
 	}
 }

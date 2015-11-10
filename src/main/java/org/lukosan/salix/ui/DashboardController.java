@@ -3,6 +3,8 @@ package org.lukosan.salix.ui;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.lukosan.salix.SalixPublisher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/salix/ui")
 public class DashboardController extends ScopedController {
 
+	@Autowired
+	private SalixPublisher salixPublisher;
+	
 	// TODO At the moment we're using the defaultTemplateResolver but this
 	// can be reconfigured to look for different file extensions by Spring
 	// i.e. we probably need another one which _definitely_ looks in the place
@@ -28,6 +33,12 @@ public class DashboardController extends ScopedController {
 			scopes = scopes.stream().filter(s -> permissionEvaluator.hasPermission(authentication, s, "SALIX_USER")).collect(Collectors.toSet());
 		model.addAttribute("scopes", scopes);
 		return "salix/ui/scopes";
+	}
+	
+	@RequestMapping("/publish/")
+	public String publish() {
+		salixPublisher.publish();
+		return "redirect:/salix/ui/";
 	}
 	
 }
