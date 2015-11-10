@@ -4,6 +4,6 @@ body.salix-ui {
 	color: #222;
 }
 textarea#source, textarea#map {
-	height: 80%;
-	min-height: 500px;
+	height: 75%;
+	min-height: 400px;
 }
