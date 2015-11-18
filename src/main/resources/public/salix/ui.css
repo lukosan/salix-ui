@@ -3,7 +3,7 @@ body.salix-ui {
 	font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #222;
 }
-textarea#source, textarea#map {
+textarea#source, textarea#map, textarea#txt {
 	height: 75%;
 	min-height: 400px;
 }

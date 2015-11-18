@@ -27,15 +27,61 @@
 		
 		<h1>Resource / <span th:text="${resource.sourceId}">sourceId</span></h1>
 
-		<form th:action="''" method="POST" role="form">
-		  <div class="form-group">
-		    <label for="sourceUri">Resource:</label>
-		    <input id="sourceUri" type="text" name="sourceUri" class="form-control" th:value="${resource.sourceUri}" />
-		  </div>
-		  <div class="form-group">
-		    <label for="map">Resource:</label>
-		    <textarea id="map" name="map" class="form-control json" th:text="${#salix.json(resource.map)}"></textarea>
-		  </div>
+		<form th:action="''" method="POST" role="form" enctype="multipart/form-data">
+		  <div class="row">
+            <div class="form-group col-md-6">
+		      <label for="sourceUri">Source URI:</label>
+		      <input id="sourceUri" type="text" name="sourceUri" class="form-control" th:value="${resource.sourceUri}" />
+		    </div>
+            <div class="form-group col-md-6">
+              <label for="view">Content type:</label>
+              <input type="text" class="form-control" id="contentType" name="contentType" th:value="${resource.contentType}" />
+            </div>
+          </div>
+		  <th:block th:if="${null==resource.resourceId}">
+		    <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#tbfile">File</a></li>
+              <li><a data-toggle="tab" href="#tbtext">Text</a></li>
+              <li><a data-toggle="tab" href="#tbjson">JSON</a></li>
+            </ul>
+            <div class="tab-content">
+		      <div id="tbfile" class="tab-pane fade in active">
+	    	    <div class="form-group">
+		          <label for="map">File:</label>
+		          <input type="file" name="file" class="form-control "/>
+		        </div>
+		      </div>
+		      <div id="tbtext" class="tab-pane fade">
+		        <div class="form-group">
+		          <label for="map">Text:</label>
+		          <textarea id="txt" name="text" class="form-control code"></textarea>
+		        </div>
+		      </div>
+              <div id="tbjson" class="tab-pane fade">
+		        <div class="form-group">
+		          <label for="map">JSON:</label>
+		          <textarea id="map" name="map" class="form-control json"></textarea>
+		        </div>
+		      </div>
+		    </div>
+		  </th:block>
+		  <th:block th:unless="${null==resource.resourceId}">
+		    <div class="form-group" th:if="${resource.resourceType==T(org.lukosan.salix.SalixResourceType).JSON}">
+		      <label for="map">JSON:</label>
+		      <textarea id="map" name="map" class="form-control json" th:text="${#salix.json(resource.map)}"></textarea>
+		      <input type="hidden" name="resourceType" value="1"/>
+		    </div>
+		    <div class="form-group" th:if="${resource.resourceType==T(org.lukosan.salix.SalixResourceType).TEXT}">
+		      <label for="map">Text:</label>
+		      <textarea id="txt" name="text" class="form-control" th:text="${resource.text}"></textarea>
+		      <input type="hidden" name="resourceType" value="2"/>
+		    </div>
+		    <div class="form-group" th:if="${resource.resourceType==T(org.lukosan.salix.SalixResourceType).TEXT}">
+		      <label for="map">File:</label>
+		      <input type="file" name="file" class="form-control "/>
+		      <input type="hidden" name="resourceType" value="0"/>
+		    </div>
+		  </th:block>
 		  <div class="form-group">
 		    <input type="submit" value="Save" class="btn btn-primary" />
 		  </div>

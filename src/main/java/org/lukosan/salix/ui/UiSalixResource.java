@@ -3,16 +3,24 @@ package org.lukosan.salix.ui;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.lukosan.salix.SalixResource;
+import org.lukosan.salix.SalixResourceBinary;
+import org.lukosan.salix.SalixResourceJson;
+import org.lukosan.salix.SalixResourceText;
+import org.lukosan.salix.SalixResourceType;
 
-public class UiSalixResource implements SalixResource {
+public class UiSalixResource implements SalixResourceJson, SalixResourceText, SalixResourceBinary {
 	
 	private static final long serialVersionUID = 1L;
 	
-	String scope;
-	String sourceId;
-	String sourceUri;
+	private String resourceId;
+	private String scope;
+	private String sourceId;
+	private String sourceUri;
 	private Map<String, Object> map = new HashMap<String, Object>();
+	private String text;
+	private SalixResourceType resourceType;
+	private String contentType;
+	private byte[] bytes;
 	
 	public UiSalixResource(String sourceId, String scope) {
 		setSourceId(sourceId);
@@ -43,5 +51,37 @@ public class UiSalixResource implements SalixResource {
 	public void setScope(String scope) {
 		this.scope = scope;
 	}
-
+	public String getText() {
+		return text;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
+	public void setResourceId(String resourceId) {
+		this.resourceId = resourceId;
+	}
+	public String getResourceId() {
+		return resourceId;
+	}
+	public String getResourceUri() {
+		return null;
+	}
+	public SalixResourceType getResourceType() {
+		return resourceType;
+	}
+	public String getContentType() {
+		return contentType;
+	}
+	public byte[] getBytes() {
+		return bytes;
+	}
+	public void setResourceType(SalixResourceType resourceType) {
+		this.resourceType = resourceType;
+	}
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+	public void setBytes(byte[] bytes) {
+		this.bytes = bytes;
+	}
 }
