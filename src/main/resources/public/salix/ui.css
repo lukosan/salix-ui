@@ -7,3 +7,6 @@ textarea#source, textarea#map, textarea#txt {
 	height: 75%;
 	min-height: 400px;
 }
+textarea#source {
+	font-family: monospace;
+}
