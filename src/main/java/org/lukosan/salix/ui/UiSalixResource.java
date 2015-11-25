@@ -1,8 +1,11 @@
 package org.lukosan.salix.ui;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.lukosan.salix.MapUtils;
+import org.lukosan.salix.ResourceWriter;
 import org.lukosan.salix.SalixResourceBinary;
 import org.lukosan.salix.SalixResourceJson;
 import org.lukosan.salix.SalixResourceText;
@@ -83,5 +86,19 @@ public class UiSalixResource implements SalixResourceJson, SalixResourceText, Sa
 	}
 	public void setBytes(byte[] bytes) {
 		this.bytes = bytes;
+	}
+
+	@Override
+	public void writeTo(ResourceWriter writer) throws IOException {
+		switch(getResourceType()) {
+			case TEXT : writer.getWriter().write(getText()); break;
+			case JSON : writer.getWriter().write(MapUtils.asString(getMap())); break;
+			case BINARY : writer.getOutputStream().write(getBytes());
+		}
+	}
+
+	@Override
+	public boolean exists() {
+		return false;
 	}
 }
