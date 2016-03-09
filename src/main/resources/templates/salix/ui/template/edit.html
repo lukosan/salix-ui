@@ -15,7 +15,36 @@
     <script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script> 
 	<script th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
 	<script th:src="@{/salix/ui.js}"></script>
-	
+	<script>
+	$(function() {
+		
+		var syncing = false;
+		
+		var sync = function(e) {
+			if(syncing)
+				return;
+			syncing = true;
+			var key = $('input#key').val();
+			var synced = localStorage.getItem('salix_html_'+key);
+			var edited = $('textarea#source').val();
+			if(synced != edited) {
+				var html = edited.split(/<body/i);
+				if(html.length == 2) {
+					localStorage.setItem('salix_head_'+key, html[0]);
+					localStorage.setItem('salix_body_'+key, '<body' + html[1]);
+				} else {
+					localStorage.setItem('salix_head_'+key, '');
+					localStorage.setItem('salix_body_'+key, edited);
+				}
+				localStorage.setItem('salix_updated_'+key, (new Date()).getTime());
+			}
+			syncing = false;
+		};
+		
+		$('textarea#source').on('change', sync).on('keyup', sync);
+
+	});
+	</script>
   </head>
   <body class="container-fluid salix-ui">
   
@@ -25,7 +54,14 @@
 		
 		<h1>Template / <span th:text="${template.name}">name</span></h1>
 
+		<div>
+		  <label>Source <input type="checkbox" name="source" checked /></label>
+		  <label>Quill <input type="checkbox" name="quill" /></label>
+		  <label>Preview <input type="checkbox" name="preview" /></label>
+		</div>
+
 		<form th:action="''" method="POST" role="form">
+		  <input type="hidden" name="key" id="key" th:value="${template.scope+'/'+template.name}" />
 		  <div class="form-group">
 		    <label for="source">Source:</label>
 		    <textarea id="source" name="source" class="form-control" th:text="${template.source}"></textarea>
@@ -34,6 +70,14 @@
 		    <input type="submit" value="Save" class="btn btn-primary" />
 		  </div>
 		</form>
+		
+		<iframe class="preview" th:src="@{${'/salix/ui/template/'+template.scope+'/'+template.name+'/?preview'}}"></iframe>
+		<!-- 
+		preview needs to load a preview in an IFRAME
+		this is a dumb page that just looks in local storage KV using the scoped URL as the key and then inserts
+		the value into the DOM using jquery (but not executing the Javascript!) BUT rewriting all src etc. to be
+		absolute
+		also think about adding thymol to the DOM? -->
 		
 	</section>
 	

@@ -33,9 +33,19 @@ public class TemplateController extends ScopedController {
 	public String create(@PathVariable String scope, @RequestParam String name) {
 		return "redirect:/salix/ui/template/" + scope + "/" + name + "/";
 	}
-	
+
 	@PreAuthorize("hasPermission(#scope, 'SALIX_USER')")
-	@RequestMapping(value="/{scope}/{name}/", method=RequestMethod.GET)
+	@RequestMapping(value="/{scope}/{name}/", method=RequestMethod.GET, params="preview")
+	public String preview(@PathVariable String scope, @PathVariable String name, Model model) {
+		SalixTemplate template = salixService.template(name, scope);
+		if(null == template)
+			template = new UiSalixTemplate(name);
+		model.addAttribute("template", template);
+		return "salix/ui/template/preview";
+	}
+
+	@PreAuthorize("hasPermission(#scope, 'SALIX_USER')")
+	@RequestMapping(value="/{scope}/{name}/", method=RequestMethod.GET, params="!preview")
 	public String edit(@PathVariable String scope, @PathVariable String name, Model model) {
 		SalixTemplate template = salixService.template(name, scope);
 		if(null == template)

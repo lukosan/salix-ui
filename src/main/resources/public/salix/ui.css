@@ -10,3 +10,8 @@ textarea#source, textarea#map, textarea#txt {
 textarea#source {
 	font-family: monospace;
 }
+iframe.preview {
+	height: 75%;
+	min-height: 400px;
+	width: 100%;
+}

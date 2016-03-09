@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>	
+    <script th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script> 
+	<script>
+	$(function() {
+		
+		var syncing = false;
+		var synced = 0;
+		
+		var sync = function() {
+			if(syncing)
+				return;
+			syncing = true;
+			var key = $('body').attr('data-url');
+			if(! localStorage.getItem('salix_updated_'+key)) {
+				syncing = false;
+				return;
+			}				
+			var updated = localStorage.getItem('salix_updated_'+key);
+			if(updated > synced) {
+				var head = localStorage.getItem('salix_head_'+key);
+				var body = localStorage.getItem('salix_body_'+key);
+				var $head = $('<html/>').html(head);
+				var $body = $('<html/>').html(body);
+				$('body').html( $body.html() );
+				var children = $('head').children();
+				for(var ix = 2; ix < children.length; ix++) {
+					$(children[ix]).remove();
+				}
+				$('head').append($head.children());
+			}
+			syncing = false;
+		};
+		
+		var syncer = window.setInterval(sync, 5000);
+
+	});
+	</script>
+  </head>
+  <body th:attr="data-url=${template.scope+'/'+template.name}">
+  Loading preview...
+  </body>
+</html>
